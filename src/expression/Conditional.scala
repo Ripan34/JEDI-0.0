@@ -8,22 +8,18 @@ case class Conditional(condition: Expression, consequent: Expression, alternativ
    */
   override def execute(env: Environment): Value = {
     if(alternative == null) {
-      condition match {
-        case boole: Boole if boole.value => consequent.execute(env)
-        case _ => throw new UndefinedException(Identifier("undefined"))
-      }
+      if(condition.execute(env).asInstanceOf[Boole].value)
+          consequent.execute(env)
+      else
+        Boole(false)
     }
     else{
-      condition match {
-        case x => if (x.isInstanceOf[Boole]){
-          if(x.asInstanceOf[Boole].value)
+          if(condition.execute(env).asInstanceOf[Boole].value)
             consequent.execute(env)
           else
             alternative.execute(env)
         }
-        else
-          throw new UndefinedException(Identifier("if expects a Boole value"))
-      }
+
     }
-  }
+
 }

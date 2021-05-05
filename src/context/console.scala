@@ -10,7 +10,7 @@ import scala.io._
  */
 
 object console {
-  val parsers = new Jedi1Parsers // for now
+  val parsers = new Jedi3Parsers // for now
   val globalEnv = new Environment
   var verbose = false
 
@@ -89,18 +89,18 @@ object console {
           println("column # = " + e.result.next.pos.column)
           println("token = " + e.result.next.first)
         }
-        case e: UndefinedException => {
-          println(e.gripe)
-          if (verbose) e.printStackTrace()
-        }
-        case e: TypeException => {
-          println(e.gripe)
-          if (verbose) e.printStackTrace()
-        }
-        case e: JediException => {
-          println(e.gripe)
-          if (verbose) e.printStackTrace()
-        }
+//        case e: UndefinedException => {
+//          println(e.gripe)
+//          if (verbose) e.printStackTrace()
+//        }
+//        case e: TypeException => {
+//          println(e.gripe)
+//          if (verbose) e.printStackTrace()
+//        }
+//        case e: JediException => {
+//          println(e.gripe)
+//          if (verbose) e.printStackTrace()
+//        }
         case e: Exception => {
           println(e.getMessage)
           more = false

@@ -15,6 +15,13 @@ object alu {
     case "more" => more(args)          // binary
     case "unequals" => unequals(args)  // binary
     case "not" => not(args)            // unary
+    case "write" => write(args)
+    case "cons" => cons(args)
+    case "car" => car(args)
+    case "cdr" => cdr(args)
+    case "nil" => nil(args)
+    case "var" => Var(args)
+    case "dereference" => dereference(args)
     // TBC
   }
 
@@ -119,5 +126,69 @@ private def mul(args: List[Value]): Value = {
     if(args.size != 1) throw new TypeException("1 inputs required by !")
     if(!args(0).isInstanceOf[Boole]) throw new TypeException("Inputs to ! must be Boole")
     !args(0).asInstanceOf[Boole]
+  }
+
+  /**
+   * write
+   */
+  private def write(args: List[Value]): Value = {
+    if(args.length > 1 || args.length <= 0)
+      throw new SyntaxException()
+    else {
+      println(args(0))
+      Notification.DONE
+    }
+  }
+
+  /**
+   * con
+   */
+  private def cons(args: List[Value]): Value = {
+    if(args.length < 0 || args.length > 2)
+      throw new SyntaxException()
+      else
+     Pairs(args(0), args(1))
+  }
+  /**
+   * car
+   */
+  private def car(args: List[Value]): Value = {
+    if(args.length < 0 || args.length > 1)
+      throw new SyntaxException()
+    else
+      args(0).asInstanceOf[Pairs].first
+  }
+  /**
+   * cdr
+   */
+  private def cdr(args: List[Value]): Value = {
+    if(args.length < 0 || args.length > 1)
+      throw new SyntaxException()
+    else
+      args(0).asInstanceOf[Pairs].second
+  }
+  /**
+   * NIL
+   */
+  private def nil(args: List[Value]): Value = {
+    empty.nil
+  }
+  /**
+   * VAR
+   */
+  private def Var(args: List[Value]): Value = {
+    if(args.length < 0 || args.length > 1)
+      throw new SyntaxException()
+  else
+    Variable(args(0))
+  }
+  /**
+   * dereference
+   */
+  private def dereference(args: List[Value]): Value = {
+    if(args.length < 0 || args.length > 1)
+      throw new SyntaxException()
+    else
+      args(0).asInstanceOf[Variable].content
   }
 }
