@@ -14,7 +14,6 @@ case class Iteration(condition: Expression, body: Expression) extends SpecialFor
       Notification.DONE
     }
     else{
-      println("iter")
       throw new TypeException
     }
   }
